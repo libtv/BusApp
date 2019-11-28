@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/activity_bustop"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:layout_width="match_parent"
+            android:id="@+id/end_direction"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:background="#FFFFFF"
+            android:layout_marginRight="1dp"
+            app:itemIconTint="@drawable/state_checked"
+            app:itemTextColor="@drawable/state_checked"
+            android:text="종점 방향"/>
+        <Button
+            android:id="@+id/start_direction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/nanumbarunpenb"
+            app:itemIconTint="@drawable/state_checked"
+            app:itemTextColor="@drawable/state_checked"
+            android:background="#FFFFFF"
+            android:layout_marginRight="1dp"
+            android:text="기점 방향"/>
+
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_bustop"></FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

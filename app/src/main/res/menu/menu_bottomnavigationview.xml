@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_busnode"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="BUS NODE" />
+    <item
+        android:id="@+id/nav_alarm"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:title="ALARM" />
+</menu>

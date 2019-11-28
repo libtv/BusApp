@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="#ffffff"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/busID"
+            android:text="ID"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:textSize="18dp"
+            android:visibility="gone"
+            android:textColor="#00a7f5"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/businterval"
+            android:visibility="gone"
+            android:text="배차 시간"
+            android:textSize="16dp"
+            android:textColor="#a902f0"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/busName"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:text="BUSNAME"
+            android:textSize="18dp"
+            android:paddingRight="90dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:text="출발지"
+            android:gravity="center"
+            android:textSize="18dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:text="↔"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:textColor="#030303"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumbarunpenb"
+            android:text="도착지"
+            android:gravity="center"
+            android:textSize="18dp"
+            />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
