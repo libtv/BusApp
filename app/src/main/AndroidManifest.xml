@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".Alarm.MyService" android:enabled="true" android:exported="true" android:label="kimjunho"/>
+        <receiver android:name=".Alarm.RestartService" android:process=":remote"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,5 +22,5 @@
         <activity android:name=".BusNode_RouteNodeActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 </manifest>

@@ -39,7 +39,7 @@ public class Fragment_StartD extends Fragment {
 
         view = inflater.inflate(R.layout.layout_start_d, container, false);
         Intent intent = getActivity().getIntent();
-        end_route = intent.getStringExtra("data");
+        end_route = intent.getStringArrayExtra("dataArray")[0];
         init();
         //리프레쉬
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_layout);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버스 이름 : " />
+    <EditText
+        android:id="@+id/alarm_busname"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="역 ID : " />
+    <EditText
+        android:id="@+id/alarm_routeid"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버스 ID: " />
+    <EditText
+        android:id="@+id/alarm_busid"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="배차 시간: " />
+    <EditText
+        android:id="@+id/alarm_bustime"
+        android:layout_width="match_parent"
+        android:enabled="false"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람 시간: " />
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"/>
+
+</LinearLayout>

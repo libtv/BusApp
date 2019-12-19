@@ -8,6 +8,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,12 +31,10 @@ public class MainActivity extends AppCompatActivity  {
     FragmentTransaction transaction;
     private final static String FRAGMENT_TAG = "FRAGMENTB_TAG";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.frameLayout, fragmenthome).commitAllowingStateLoss();
         //액션 바
@@ -44,10 +43,12 @@ public class MainActivity extends AppCompatActivity  {
         ab.setDisplayUseLogoEnabled(true);
         ab.setDisplayShowHomeEnabled(true);
         setTitle("  " + "Bus App");
-
         bottomNavigationView = findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(new ItemSelectedListener());
         busmain = new BUSMAIN();
+    }
+
+    public void onAlarm() {
 
     }
 
@@ -136,6 +137,4 @@ public class MainActivity extends AppCompatActivity  {
         });
         return true;
     }
-
-
 }

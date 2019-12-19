@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +33,7 @@ public class Fragment_Busnode extends Fragment {
 
         View view = inflater.inflate(R.layout.bus_management, container, false) ;
 
-        Intent intent = getActivity().getIntent();
+        final Intent intent = getActivity().getIntent();
 
         listView = (ListView) view.findViewById(R.id.listView);
         busList = new ArrayList<>();
@@ -46,20 +47,21 @@ public class Fragment_Busnode extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intents = new Intent(getActivity(), BusNodeActivity.class);
-                intents.putExtra("data", busList.get(position).getBusID()); //데이터보내기
-                intents.putExtra("data2", busList.get(position).getBusName()); //데이터보내기
+                intents.putExtra("dataArray", busList.get(position).getToString()); // 데이터 어레이 보내기
                 getActivity().startActivity(intents);
             }
         });
 
         try{
             BUSNODE busnode;
-
             Thread.currentThread();
 
             if (listView.getCount() == 0) {
                 for(BUSNODE b : BUSMAIN.lists()) {
-                    busnode = new BUSNODE(b.getBusID(), b.getBusName(), b.getInterval());
+                    busnode = new BUSNODE(b.getBusID(), b.getBusName(), b.getInterval(),
+                            b.getAllo_Interval_sat(), b.getAllo_Interval_sun(), b.getBUSSTOP_CNT(),
+                            b.getORIGIN_START(), b.getORIGIN_START_SAT(), b.getORIGIN_START_SUN(),
+                            b.getORIGIN_END(), b.getORIGIN_END_SAT(), b.getORIGIN_END_SUN());
                     busList.add(busnode);//리스트뷰에 값을 추가해줍니다
                 }
             }

@@ -44,7 +44,7 @@ public class BusRouteListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v = View.inflate(context, R.layout.bus_route_node, null);
 
-        //뷰에 다음 컴포넌트들을 연결시켜줌
+
         TextView routeID = (TextView)v.findViewById(R.id.routenode_id);
         TextView routeName = (TextView)v.findViewById(R.id.routenode_name);
         TextView Destination = (TextView)v.findViewById(R.id.routenode_destination);
@@ -56,7 +56,7 @@ public class BusRouteListAdapter extends BaseAdapter {
         routeName.setText(busRoute.get(i).getBusroute_Name());
         Destination.setText(busRoute.get(i).getDestination());
 
-        //여기서부터 버스 알고리즘이 시작됨!!
+
         String status_pos = "";
         String extime = "";
 

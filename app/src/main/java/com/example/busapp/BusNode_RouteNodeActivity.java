@@ -1,15 +1,18 @@
 package com.example.busapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,12 +22,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.busapp.Alarm.RestartService;
 import com.example.busapp.BUSDTO.BUSMAIN;
+import com.example.busapp.BUSDTO.BUSNODE;
 import com.example.busapp.BUSDTO.BUSROUTE_NODE;
-import com.example.busapp.BUSDTO.XMLParse;
 import com.example.busapp.BUSListener.BusRouteListAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class BusNode_RouteNodeActivity extends AppCompatActivity {
@@ -64,36 +69,84 @@ public class BusNode_RouteNodeActivity extends AppCompatActivity {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        View dialogView;
-        switch (item.getItemId()) {
-            case R.id.star:
-                AlertDialog.Builder dlg  = new AlertDialog.Builder(this);
-                dialogView = (View) View.inflate(this, R.layout.fragment_login, null); //DialogView
+        /* 리스트뷰 리스너 */
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                /* 변수 설정 */
+                AlertDialog.Builder dlg  = new AlertDialog.Builder(BusNode_RouteNodeActivity.this);
+                View dialogView = (View) View.inflate(BusNode_RouteNodeActivity.this, R.layout.layout_setting_alarm, null);
+                EditText station_id = (EditText) dialogView.findViewById(R.id.alarm_routeid);
+                EditText bus_id = (EditText) dialogView.findViewById(R.id.alarm_busid);
+                EditText bus_name = (EditText) dialogView.findViewById(R.id.alarm_busname);
+                final TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.timePicker);
+                EditText bus_time = (EditText) dialogView.findViewById(R.id.alarm_bustime);
+                final int time_b = Integer.parseInt(return_time(routenodeList.get(position).getBusroute_ID()));
 
-                dlg.setTitle("알람");
+                /* 설정 */
+                dlg.setTitle("알림 설정");
+                station_id.setText(dataID);
+                bus_id.setText(routenodeList.get(position).getBusroute_ID());
+                bus_name.setText(routenodeList.get(position).getBusroute_Name());
+                bus_time.setText(String.valueOf(time_b));
                 dlg.setView(dialogView);
-
                 dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(getApplicationContext(), "로그인 완료!!", Toast.LENGTH_SHORT).show();
+                        SharedPreferences settings = getSharedPreferences("BUSAPP_ALARM", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = settings.edit();
+                        //배차시간
+                        alarm_sender(routenodeList.get(position).getBusroute_ID(), dataID, timePicker.getCurrentHour(), timePicker.getCurrentMinute(), time_b*1000*60);
+                        editor.putString(routenodeList.get(position).getBusroute_ID(), timePicker.getCurrentHour()+ ":" + timePicker.getCurrentMinute()); // 버스아이디값과 시간값을 넘겨줌
+                        Toast.makeText(getApplicationContext(), "설정이 완료되었습니다." , Toast.LENGTH_SHORT).show();
+                        editor.commit();
                     }
                 });
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
-        }
-        return super.onOptionsItemSelected(item);
+                return false;
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-            super.onCreateOptionsMenu(menu);
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_route_node, menu);
-        return super.onCreateOptionsMenu(menu);
+    public String return_time(String bus_id) {
+        BUSNODE find_Busnode = null;
+        for(BUSNODE b: BUSMAIN.lists()) {
+            if (b.getBusID().equals(bus_id)) {
+                find_Busnode = b;
+            }
+        }
+        return find_Busnode.getInterval();
+    }
+
+    public void alarm_sender(String bus_id, String station_id, int hour, int min, int minus) {
+        AlarmManager am;
+        PendingIntent sender;
+        Intent intent;
+
+        Calendar restart = Calendar.getInstance();
+        restart.set(Calendar.HOUR_OF_DAY, hour);
+        restart.set(Calendar.MINUTE, min);
+        restart.set(Calendar.SECOND, 0);
+
+        intent = new Intent(getApplicationContext(), RestartService.class);
+        intent.putExtra("bus_id", bus_id);
+        intent.putExtra("station_id", station_id);
+        intent.putExtra("bus_hour", hour);
+        intent.putExtra("bus_min", min);
+        intent.putExtra("bus_minus", minus);
+
+        sender = PendingIntent.getBroadcast(getApplicationContext(), Integer.parseInt(bus_id), intent, 0);
+        am = (AlarmManager)getSystemService(ALARM_SERVICE);
+
+        // 알람 매니저, 인텐트등 설정 후
+        if (Build.VERSION.SDK_INT >= 23) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, restart.getTimeInMillis()-minus, sender);
+        } else if (Build.VERSION.SDK_INT >= 19){
+            am.setExact(AlarmManager.RTC_WAKEUP, restart.getTimeInMillis()-minus, sender);
+        } else {
+            am.set(AlarmManager.RTC_WAKEUP, restart.getTimeInMillis()-minus, sender);
+        }
     }
 
     private void init() {

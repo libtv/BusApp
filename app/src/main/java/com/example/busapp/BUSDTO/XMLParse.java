@@ -53,7 +53,20 @@ public class XMLParse extends Thread {
                                 BUSMAIN.list.add(new BUSNODE()
                                         .setBusID(getTagValue("ROUTE_CD", eElement))
                                         .setBusName(getTagValue("ROUTE_NO", eElement))
-                                        .setInterval(getTagValue("ALLO_INTERVAL", eElement)));
+                                        .setInterval(getTagValue("ALLO_INTERVAL", eElement))
+                                        .setAllo_Interval_sat(getTagValue("ALLO_INTERVAL_SAT", eElement))
+                                        .setAllo_Interval_sun(getTagValue("ALLO_INTERVAL_SUN", eElement))
+
+                                        .setBUSSTOP_CNT(getTagValue("BUSSTOP_CNT", eElement))
+
+                                        .setORIGIN_START(getTagValue("ORIGIN_START", eElement))
+                                        .setORIGIN_START_SAT(getTagValue("ORIGIN_START_SAT", eElement))
+                                        .setORIGIN_START_SUN(getTagValue("ORIGIN_START_SUN", eElement))
+
+                                        .setORIGIN_END(getTagValue("ORIGIN_END", eElement))
+                                        .setORIGIN_END_SAT(getTagValue("ORIGIN_END_SAT", eElement))
+                                        .setORIGIN_END_SUN(getTagValue("ORIGIN_END_SUN", eElement))
+                                );
                             }    // for end
                         }    // if end
                     }
@@ -166,7 +179,7 @@ public class XMLParse extends Thread {
                 Element eElement = (Element) nNode;
 
                 BUSMAIN.route_node.add(new BUSROUTE_NODE()
-                        .setBusroute_ID(getTagValue("BUS_NODE_ID", eElement))
+                        .setBusroute_ID(getTagValue("ROUTE_CD", eElement))
                         .setBusroute_Name(getTagValue("ROUTE_NO", eElement))
                         .setDestination(getTagValue("DESTINATION", eElement))
                         .setStatus_pos(getTagValue("STATUS_POS", eElement))
